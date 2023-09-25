@@ -9,15 +9,24 @@ document.addEventListener("DOMContentLoaded", function () {
     return (plan.capital * plan.plazo * plan.tasa) / 100;
   }
 
-  let sumaTotalIntereses = 0;
-
-  for (const plan of planesDeCredito) {
-    const interes = calcularInteres(plan);
-    sumaTotalIntereses += interes;
+  function calcularSumaTotalIntereses(planes) {
+    let sumaTotalIntereses = 0;
+    for (const plan of planes) {
+      sumaTotalIntereses += calcularInteres(plan);
+    }
+    return sumaTotalIntereses;
   }
 
+  function agregarInteresAInversiones(planes) {
+    for (const plan of planes) {
+      plan.interes = calcularInteres(plan);
+    }
+  }
+
+  agregarInteresAInversiones(planesDeCredito);
+
   const resultadoDiv = document.createElement("div");
-  resultadoDiv.textContent = `La suma total de intereses es: ${sumaTotalIntereses}`;
+  resultadoDiv.textContent = `La suma total de intereses es: ${calcularSumaTotalIntereses(planesDeCredito)}`;
   resultadoDiv.classList.add("resultado");
   document.body.appendChild(resultadoDiv);
 });
